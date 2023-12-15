@@ -1,0 +1,9 @@
+.idea
+dist
+bin
+node_modules
+
+# ignore lock files
+pnpm-lock.yaml
+package-lock.json
+yarn.lock

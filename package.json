@@ -1,0 +1,52 @@
+{
+  "name": "create-utools-plugin",
+  "version": "0.0.2",
+  "description": "",
+  "license": "MIT",
+  "main": "./bin/index.js",
+  "type": "module",
+  "bin": {
+    "create-utools-plugin": "./bin/index.js",
+    "cup": "./bin/index.js"
+  },
+  "files": [
+    "bin",
+    "template",
+    "README.md",
+    "package.json"
+  ],
+  "scripts": {
+    "dev": "tsup --watch",
+    "start": "node ./bin/index.js",
+    "build": "tsup",
+    "build:schema": "typescript-json-schema --required ./src/schema/index.ts Schema -o ./dist/schema.json",
+    "release": "pnpm build && npm publish",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "liuxin",
+  "homepage": "https://github.com/liuxin2533",
+  "devDependencies": {
+    "@types/ejs": "^3.1.5",
+    "@types/fs-extra": "^11.0.4",
+    "@types/inquirer": "^9.0.7",
+    "@types/jsonfile": "^6.1.4",
+    "@types/minimist": "^1.2.5",
+    "@types/node": "^16.18.68",
+    "@typescript-eslint/eslint-plugin": "^6.14.0",
+    "@typescript-eslint/parser": "^6.14.0",
+    "eslint": "^8.55.0",
+    "ts-node": "^10.9.2",
+    "tsup": "^8.0.1",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "chalk": "^5.3.0",
+    "ejs": "^3.1.9",
+    "execa": "^8.0.1",
+    "fs-extra": "^11.2.0",
+    "inquirer": "^9.2.12",
+    "jsonfile": "^6.1.0",
+    "minimist": "^1.2.8"
+  }
+}

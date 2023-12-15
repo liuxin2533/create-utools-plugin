@@ -1,0 +1,13 @@
+*.js    eol=lf
+*.jsx   eol=lf
+*.json  eol=lf
+
+*.ts    eol=lf
+*.tsx   eol=lf
+
+*.vue   eol=lf
+
+*.less  eol=lf
+*.css   eol=lf
+*.scss  eol=lf
+
