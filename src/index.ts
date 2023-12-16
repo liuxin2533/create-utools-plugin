@@ -19,10 +19,13 @@ async function main() {
   console.log(chalk.blue('正在创建项目...'), chalk.green(dir));
   await gen(answers);
   console.log(chalk.blue('正在安装依赖...'));
-  execa(answers.pkgTool, [`install`], {
+  execa(answers.pkgTool, [`i`], {
     cwd: dir,
-    stdio: [2, 2, 2]
-  });
+  }).then(res=>{
+    console.log(chalk.green('安装完成'));
+  }).catch(err=>{
+    console.error(err);
+  })
 }
 
 main().catch(e => {
