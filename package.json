@@ -1,6 +1,6 @@
 {
   "name": "create-utools-plugin",
-  "version": "0.0.2",
+  "version": "0.0.5",
   "description": "",
   "license": "MIT",
   "main": "./bin/index.js",
