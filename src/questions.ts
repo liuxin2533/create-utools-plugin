@@ -1,4 +1,9 @@
-import inquirer, { Answers, CheckboxQuestion, InputQuestion, ListQuestion } from 'inquirer';
+import inquirer, {
+  Answers,
+  CheckboxQuestion,
+  InputQuestion,
+  ListQuestion,
+} from 'inquirer';
 import { PACKAGE_TOOLS, PLAT_FORMS, PLUGIN_MODES } from './consts';
 import fsExtra from 'fs-extra';
 import path from 'path';
@@ -20,7 +25,7 @@ export async function questions(root: string) {
       }
       return true;
     },
-    message: '插件名称:'
+    message: '插件名称:',
   };
   const platform: CheckboxQuestion = {
     type: 'checkbox',
@@ -35,26 +40,30 @@ export async function questions(root: string) {
       }
       return true;
     },
-    choices: PLAT_FORMS
+    choices: PLAT_FORMS,
   };
   const mode: ListQuestion = {
     type: 'list',
     name: 'mode',
     message: '插件运行模式:',
-    choices: PLUGIN_MODES
+    choices: PLUGIN_MODES,
+  };
+  const temp: ListQuestion = {
+    type: 'list',
+    name: 'temp',
+    message: '选择模板:',
+    choices: ['vue3'],
+    when: (answer) => {
+      return answer.mode === 'normal';
+    },
   };
   const pkgTool: ListQuestion = {
     type: 'list',
     name: 'pkgTool',
     message: '选择包管理器:',
-    choices: PACKAGE_TOOLS
+    choices: PACKAGE_TOOLS,
   };
 
-  const answer: Answers = await prompt([
-    name,
-    platform,
-    mode,
-    pkgTool
-  ]);
+  const answer: Answers = await prompt([name, platform, mode, temp, pkgTool]);
   return answer as MyAnswer;
 }

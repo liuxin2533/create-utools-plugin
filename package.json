@@ -47,6 +47,7 @@
     "fs-extra": "^11.2.0",
     "inquirer": "^9.2.12",
     "jsonfile": "^6.1.0",
-    "minimist": "^1.2.8"
+    "minimist": "^1.2.8",
+    "prettier": "^3.1.1"
   }
 }
