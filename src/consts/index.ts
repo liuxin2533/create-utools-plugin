@@ -1,10 +1,8 @@
 const PLAT_FORMS = ['win32', 'darwin', 'linux'] as const;
 
 const PLUGIN_MODES = [
-  { name: '普通模式', value: 'normal' },
-  { name: '无UI模式', value: 'no-ui' },
-  { name: '列表模式', value: 'list' },
-  { name: '文档模式', value: 'doc' },
+  { name: 'web应用', value: 'web' },
+  { name: 'utools预设模板应用', value: 'preset' },
 ] as const;
 
 const PACKAGE_TOOLS = ['npm', 'yarn', 'pnpm'] as const;

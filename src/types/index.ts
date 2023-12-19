@@ -8,4 +8,8 @@ export type MyAnswer = {
   pkgTool: string;
 };
 
+export type Config = {
+  root: string;
+} & MyAnswer;
+
 export default {};

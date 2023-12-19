@@ -1,29 +1,39 @@
 #!/usr/bin/env node
 import { printBanner } from './banner';
 import { questions } from './questions';
-import { gen } from './gen';
+import { buildConfig } from './config';
+import { make } from './make';
 import chalk from 'chalk';
-import minimist from 'minimist';
 import { $ } from 'execa';
-import path from 'path';
+import inquirer from 'inquirer';
+import fsExtra from 'fs-extra';
 
-const argv = minimist(process.argv.slice(2));
 
 async function main() {
-  const targetDir = argv._[0] || '.';
-  const root = path.join(process.cwd(), targetDir);
   printBanner();
-  const answers = await questions(root);
-  const dir = path.join(root, answers.name);
 
-  console.log(chalk.blue('正在创建项目...'), chalk.green(dir));
-  await gen(answers);
+  const answers = await questions();
+  const config = buildConfig(answers);
+
+  if (fsExtra.existsSync(config.root)) {
+    const prompt = inquirer.createPromptModule();
+    const answer = await prompt([{ type: 'confirm', name: 'cover', message: '已存在同名目录, 是否覆盖？' }]);
+    if (!answer.cover) {
+      console.log(chalk.red('用户取消！'));
+      return process.exit(1);
+    }
+  }
+
+  console.log(chalk.blue('正在创建项目...'), chalk.green(config.root));
+  await make(config);
 
   console.log(chalk.blue('正在安装依赖...'));
-  await $({ cwd: dir, stdio: 'inherit' })`${answers.pkgTool} install`;
+  await $({ cwd: config.root, stdio: 'inherit' })`${answers.pkgTool} install`;
 
-  console.log('完成!');
+  console.log('\n');
+  console.log(chalk.blue('完成！'));
 }
+
 main().catch((e) => {
   console.error(e);
 });

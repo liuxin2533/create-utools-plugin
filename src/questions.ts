@@ -1,31 +1,20 @@
-import inquirer, {
-  Answers,
-  CheckboxQuestion,
-  InputQuestion,
-  ListQuestion,
-} from 'inquirer';
+import inquirer, { CheckboxQuestion, InputQuestion, ListQuestion, } from 'inquirer';
 import { PACKAGE_TOOLS, PLAT_FORMS, PLUGIN_MODES } from './consts';
-import fsExtra from 'fs-extra';
-import path from 'path';
 import { MyAnswer } from './types';
 
 const prompt = inquirer.createPromptModule();
 
-export async function questions(root: string) {
-  function resolve(p: string) {
-    return path.resolve(root, p);
-  }
-
+export async function questions() {
   const name: InputQuestion = {
     type: 'input',
     name: 'name',
-    validate: async (value: string) => {
-      if (fsExtra.existsSync(resolve(value))) {
-        return '已存在同名目录, 请重新输入...';
+    message: '插件名称:',
+    validate: (input: string) => {
+      if (!input) {
+        return '输入插件名称';
       }
       return true;
     },
-    message: '插件名称:',
   };
   const platform: CheckboxQuestion = {
     type: 'checkbox',
@@ -51,10 +40,10 @@ export async function questions(root: string) {
   const temp: ListQuestion = {
     type: 'list',
     name: 'temp',
-    message: '选择模板:',
+    message: '选择WEB模板:',
     choices: ['vue3'],
     when: (answer) => {
-      return answer.mode === 'normal';
+      return answer.mode === 'web';
     },
   };
   const pkgTool: ListQuestion = {
@@ -64,6 +53,5 @@ export async function questions(root: string) {
     choices: PACKAGE_TOOLS,
   };
 
-  const answer: Answers = await prompt([name, platform, mode, temp, pkgTool]);
-  return answer as MyAnswer;
+  return prompt<MyAnswer>([name, platform, mode, temp, pkgTool]);
 }

@@ -4,7 +4,7 @@ import copy from 'rollup-plugin-copy';
 import clear from 'rollup-plugin-clear';
 
 export default {
-  input: 'preload.js',
+  input: './preload.js',
   output: {
     dir: 'dist',
     entryFileNames: 'preload.js',
@@ -17,7 +17,10 @@ export default {
     commonjs(),
     nodeResolve(),
     copy({
-      targets: [{src: 'public/*', dest: 'dist'}],
+      targets: [
+        {src: 'public/*', dest: 'dist'},
+        {src: './plugin.json', dest: 'dist/plugin.json'}
+      ],
       verbose: true,
     }),
     clear({
